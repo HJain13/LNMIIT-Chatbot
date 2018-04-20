@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>LNMIIT Chatbot</title>
+	<link rel="stylesheet" href="css/bulma.min.css">
+	<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<div class="is-header is-fixed-top has-text-centered">
+		<p class="title" >LNMIIT Chatbot</p>
+	</div>
+	<div class="section">
+		<div id="chat-container" class="container">
+			<div class="columns">
+				<div class="column is-8 is-offset-2">
+					<div id="chat"></div>
+				</div>			
+			</div>
+		</div>
+		<div class="is-chat">
+			<div class="container">
+				<div class="columns">
+					<div class="column is-8 is-offset-2">
+						<div id="question">
+							<form onsubmit="return genie()">
+								<div class="field has-addons">
+									<div class="control is-expanded">
+										<input class="input" id="query" autocomplete="off" type="text" placeholder="Ask your Question!">
+									</div>
+									<div class="control">
+										<button type="submit" class="button is-info">Go</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/genie.js"></script>
+</body>
+</html>
