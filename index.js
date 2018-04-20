@@ -19,6 +19,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(morgan('dev'));
 
+app.use(function(req, res, next) {
+	req.headers['if-none-match'] = 'no-match-for-this';
+	next();    
+});
+
 // Creating the Database
 function getPrecedingValue(match){
 	return ' ' + match[match.length - 1];

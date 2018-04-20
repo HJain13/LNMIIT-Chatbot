@@ -1,7 +1,7 @@
 var express = require('express');
-//var result = require('./result');
+var bot = require('./bot');
 var api = express.Router();
 
-//api.get('/result/:screenName', result.result);
+api.get('/answer/:query', bot.result);
 
 module.exports = api;
