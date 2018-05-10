@@ -91,13 +91,11 @@ button:disabled {
 #chat-container {
   position: absolute;
   bottom: 4em;
-  margin-left: 50%;
-  transform: translateX(-50%);
   max-height: 80vh;
 }
 
 #chat {
-  margin-bottom: 1rem;
+  margin-bottom: 4rem;
 }
 
 .is-chat-bubble-user, .is-chat-bubble-bot{
@@ -113,4 +111,11 @@ button:disabled {
 
 .has-no-right-padding {
   padding-right: 0 !important;
+}
+
+@media only screen and (min-width: 1021px) {
+  #chat-container {
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }  
 }

@@ -5,6 +5,9 @@ const cors = require('cors');
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
+const sw = require('stopword');
+const natural = require('natural');
+const Lemmer = require('lemmer');
 const api = require('./api/routes');
 const fs = require('fs');
 
@@ -37,12 +40,29 @@ fs.readFile('./data/content.txt', 'utf8', (err, data) => {
         const content = data;
         var processedContent = content.replace(/\[\d\]/g, '').replace(/\. [a-z]/g,getPrecedingValue).replace(/[\n\r]/g, ' ');
         var sentences = processedContent.split('. ');
-        console.log('Processing!');        
-        fs.writeFile('./data/processed.txt', JSON.stringify(sentences), 'utf8', (err) => {
+        console.log('Breaking Into Sentences!');        
+        fs.writeFile('./data/sentences.txt', JSON.stringify(sentences), 'utf8', (err) => {
             if (err) {
                 console.log(err);
             } else {
-                console.log('Processed content was Saved!');
+                var procesedSentences = [], pSentence, pSentStem = [];
+                console.log('All sentences were Saved!');
+                sentences.forEach(function (sentence, index){
+                    pSentStem = [];
+                    pSentence = sw.removeStopwords(sentence.replace(/,/g,'').split(' '));                
+                    Lemmer.lemmatize(pSentence, function(err, words){
+                        pSentStem = words;
+                        pSentence = pSentStem.join(" ")
+                        procesedSentences[index] = pSentence;              
+                        fs.writeFile('./data/processed.txt', JSON.stringify(procesedSentences), 'utf8', (err) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log('Sentence['+index+'] processing successful!');                
+                            }
+                        });                        
+                    });
+                });
             }
         });
     }

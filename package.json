@@ -24,6 +24,7 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
+    "lemmer": "^0.3.0",
     "morgan": "^1.9.0",
     "natural": "^0.5.6",
     "path": "^0.12.7",
