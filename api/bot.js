@@ -8,18 +8,22 @@ var WordPOS = require('wordpos');
 var wordpos = new WordPOS();
 var api = express.Router();
 
+// =============== Building Result API ================ //
 
 api.result = function(req, res, next) {
 	console.log("Starting answering!!");
 
 	var querySynonyms = [];
 	var synPromises = [];
-		
+	
+	// Changing query to lower case, to make matching case insensitive
 	var query = req.params.query.toLowerCase();
 	query = query.replace(/!.\?/g, "");
 	console.log(query);
+	// Splitting Query sentence in a group of words
 	var queryTerms = sw.removeStopwords(query.split(' '));
 	var greetings = ['hey', 'hello', 'hi'];
+	// Handling Salutations
 	if(greetings.indexOf(queryTerms[0]) != -1){
 		res.status(200).send({
 			'best_answer': {'answer': 'Hello! Nice to Meet You 😊', 'score': 100}
@@ -50,6 +54,7 @@ api.result = function(req, res, next) {
 					});
 				});
 				Promise.all(synPromises).then(function(){
+					// Lemmatizing all the query terms
 					Lemmer.lemmatize(queryTerms).then(function (queryTerms){
 						console.log(queryTerms);
 						console.log(querySynonyms);
@@ -79,7 +84,7 @@ api.result = function(req, res, next) {
 							} else {
 								var sentences = JSON.parse(data);
 								var temp;
-								//Sorting
+								//Sorting while keeping score and sentence index same
 								for(var i = 0; i < sentences.length-1; i++){
 									for(var j = 0; j < sentences.length-i-1; j++){
 										if(scores[j] < scores[j+1]){
@@ -99,6 +104,7 @@ api.result = function(req, res, next) {
 								});
 								
 								if(scores[0] < 1){
+									//handling apology
 									res.status(200).send({
 										'best_answer': {'answer': 'I couldn\'t find any relevant answer! 😞', 'score': scores[0]},
 										'answers': answer
