@@ -29,6 +29,7 @@
     "natural": "^0.5.6",
     "path": "^0.12.7",
     "request-promise": "^4.2.2",
-    "stopword": "^0.1.10"
+    "stopword": "^0.1.10",
+    "wordpos": "^1.1.6"
   }
 }
