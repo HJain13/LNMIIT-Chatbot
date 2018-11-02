@@ -39,9 +39,9 @@ fs.readFile('./data/content.txt', 'utf8', (err, data) => {
         console.log(err);
     } else {
         console.log('Reading Content from Data Folder.');        
-        const content = data;
+        var content = data;
         // Removing attributions as well as period for short forms
-        var processedContent = content.replace(/\[\d\]/g, '').replace(/\. [a-z]/g,getPrecedingValue).replace(/[\n\r]/g, ' ');
+        var processedContent = content.replace(/\[\d+\]/g, '').replace(/\. [a-z]/g,getPrecedingValue).replace(/[\n\r]/g, ' ');
         // ==> Necessary when splitting sentences on basis of period
         var sentences = processedContent.split('. ');
         console.log('Breaking Into Sentences!');        

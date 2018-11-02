@@ -43,17 +43,25 @@ api.result = function(req, res, next) {
 				console.log(err);
 			} else {
 				var sentences = JSON.parse(data);
-				queryTerms.forEach((qt) => {
+				// queryTerms.forEach((qt) => {
+				// 	wordpos.lookup(qt,syns => {
+				// 		console.log('okay');
+				// 		synPromises.push(new Promise(function(resolve, reject) {
+				// 			console.log("Synonym --> "+syns[0].synonyms);
+				// 			querySynonyms = querySynonyms.concat(syns[0].synonyms);
+				// 			resolve(1);
+				// 		}));			
+				// 	});
+				// });
+
+				Promise.all(queryTerms.map(qt => {
 					wordpos.lookup(qt,syns => {
-						console.log('okay');
-						synPromises.push(new Promise(function(resolve, reject) {
-							console.log("Synonym --> "+syn[0].synonyms);
-							querySynonyms.concat(syn[0].synonyms);
-							resolve(1);
-						}));			
+						console.log('okay2');
+						console.log("Synonym --> "+syns[0].synonyms);
+						querySynonyms = querySynonyms.concat(syns[0].synonyms);
 					});
-				});
-				Promise.all(synPromises).then(function(){
+				}))
+				.then(function(){
 					// Lemmatizing all the query terms
 					Lemmer.lemmatize(queryTerms).then(function (queryTerms){
 						console.log(queryTerms);

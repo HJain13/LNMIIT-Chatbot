@@ -1,7 +1,7 @@
 {
     "courses" : {
-        "Data Mining" : "",
-        "DM" : ""
+        "Data Mining" : "courses/data-mining.md",
+        "DM" : "courses/data-mining.md"
     },
     "instructors" : {
         "Subrat Dash" : ""
