@@ -14,7 +14,6 @@ api.result = function(req, res, next) {
 	console.log("Starting answering!!");
 
 	var querySynonyms = [];
-	var synPromises = [];
 	
 	// Changing query to lower case, to make matching case insensitive
 	var query = req.params.query.toLowerCase();

@@ -1,10 +1,18 @@
 {
     "courses" : {
-        "Data Mining" : "courses/data-mining.md",
-        "DM" : "courses/data-mining.md"
+        "data mining" : "courses/data-mining.md",
+        "dm" : "courses/data-mining.md",
+        "eclsa" : "",
+        "ethnic culture" : "",
+        "cloud computing" : "courses/cloud-computing.md",
+        "cc" : "courses/cloud-computing.md",
+        "bfss" : ""
     },
     "instructors" : {
-        "Subrat Dash" : ""
+        "subrat dash" : "",
+        "subrat" : "",
+        "aps" : "",
+        "ambika pratap" : ""
     },
     "departments" : {
         "Computer Science and Engineering" : "",
