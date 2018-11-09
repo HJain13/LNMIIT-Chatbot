@@ -2,3 +2,4 @@ node_modules/*
 package-lock.json
 data/processed.txt
 data/sentences.txt
+data/repo/*
