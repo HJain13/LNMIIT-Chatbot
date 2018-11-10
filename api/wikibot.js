@@ -8,6 +8,7 @@ var WordPOS = require('wordpos');
 var wordpos = new WordPOS();
 var api = express.Router();
 var abBuilder = require('../tools/abBuilder.js');
+var wikiReader = require('../tools/wikiReader.js');
 
 // =============== Building Result API ================ //
 
@@ -48,19 +49,25 @@ api.result = function(req, res, next) {
 			} else {
 				var namedEntities = JSON.parse(data);
 				({ answerBank, queryNER } = abBuilder.build(namedEntities, query));
-				Promise.all(queryTerms.map(async qt => {
-					wordpos.lookup(qt,syns => {
-						console.log('okay2');
-						console.log("Synonym --> "+syns[0].synonyms);
-						querySynonyms = querySynonyms.concat(syns[0].synonyms);
+				answerBank = Array.from(answerBank);
+				let content = [];
+				Promise.all(answerBank.map(async path => await wikiReader.read('./data/repo/'+path)))
+				.then(function(result) {
+					content = result;
+					console.log('The content is: '+result);
+					Promise.all(queryTerms.map(async qt => {
+						await wordpos.lookup(qt,syns => {
+							console.log('okay2');
+							console.log("Synonym --> "+JSON.stringify(syns[0]));
+							querySynonyms = querySynonyms.concat(syns[0].synonyms);
+						});
+					})).then(function(values){
+						console.log(queryNER);
+						res.status(200).send({
+							"data" : answerBank
+						});
 					});
-				})).then(function(values){
-					console.log(queryNER);
-					answerBank = Array.from(answerBank);
-					res.status(200).send({
-						"data" : answerBank
-					});
-				});
+				})
 			}
 		});
 	}
