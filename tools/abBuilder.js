@@ -12,6 +12,7 @@ module.exports = {
                 }
             }
         }
+        answerBank = Array.from(answerBank);
         return { answerBank, queryNER };
     }
 };
