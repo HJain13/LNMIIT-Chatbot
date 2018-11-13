@@ -82,7 +82,7 @@ api.result = function(req, res, next) {
                 let sentences = source.split(". ");
                 // console.log(sentences);
                 sentences.forEach((sentence, sIndex) => {
-                  let score = 1 - 0.01 * (sIndex + 1);
+                  let score = 1 - 1/sentences.length * (sIndex + 1);
                   queryNERTerms.forEach(qt => {
                     if (sentence.toLowerCase().search(qt) != -1) {
                       score++;
@@ -90,10 +90,15 @@ api.result = function(req, res, next) {
                       let words = sentence.split(" ");
                       words.forEach(word => {
                         if (metaphone.compare(word, qt)) {
-                          score += 0.8;
+                          score += 0.6;
                           console.log(`Matched ${word} & ${qt}`);
                         }
                       });
+                    }
+									});
+									querySynonyms.forEach(qs => {
+                    if (sentence.toLowerCase().search(qs) != -1) {
+                      score += 0.9;
                     }
                   });
                   scores.push([sentence, score.toPrecision(3)]);
@@ -101,7 +106,7 @@ api.result = function(req, res, next) {
               });
               scores.sort((a, b) => b[1] - a[1]);
               if (scores[0][1] < 1) {
-                //handling apology
+                // handling apology
                 res.status(200).send({
                   best_answer: {
                     answer: "I couldn't find any relevant answer! 😞",
