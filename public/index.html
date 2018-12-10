@@ -25,10 +25,17 @@
 				<div class="columns">
 					<div class="column is-8 is-offset-2">
 						<div id="question">
-							<form onsubmit="return genie()">
+							<form onsubmit="return genie(0)">
 								<div class="field has-addons">
 									<div class="control is-expanded">
 										<input class="input" id="query" autocomplete="off" type="text" placeholder="Ask your Question!">
+									</div>
+									<div class="control">
+										<button type="button" class="button is-light" onclick="dictate()">
+											<figure class="image is-24x24">
+												<img src="https://www.materialui.co/materialIcons/av/mic_black_192x192.png">
+											</figure>
+										</button>
 									</div>
 									<div class="control">
 										<button type="submit" class="button is-info">Go</button>
