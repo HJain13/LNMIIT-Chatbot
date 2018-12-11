@@ -49,6 +49,12 @@ api.result = function(req, res, next) {
       .send({
         best_answer: { answer: "I am feeling great since I started talking with you! 😂", score: 100 }
       });
+  } else if (query.toLowerCase().search("mess") != -1) {
+    res
+      .status(200)
+      .send({
+        best_answer: { answer: "Your confirmation has been recieved", score: 100 }
+      });
   } else {
     //Getting Databse
     fs.readFile("./data/ner.json", "utf8", (err, data) => {
@@ -124,6 +130,17 @@ api.result = function(req, res, next) {
                     });
                   });
                   scores.sort((a, b) => b[1] - a[1]);
+                  if(scores.length == 0) {
+                    res
+                      .status(200)
+                      .send({
+                        best_answer: {
+                          answer: "I couldn't find any relevant data to answer! 😞 <br /> Relevant article should soon be added",
+                          score: scores[0]
+                        },
+                        answers: ''
+                      });
+                  }
                   if (scores[0][1] < 1) {
                     // handling apology
                     res
